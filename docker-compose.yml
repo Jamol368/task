@@ -22,3 +22,17 @@ services:
             MYSQL_ROOT_PASSWORD: root
         ports:
             - "9906:3306"
+        volumes:
+            - ./dump:/docker-entrypoint-initdb.d
+    phpmyadmin:
+        container_name: php-myadmin
+        image: phpmyadmin/phpmyadmin:latest
+        restart: always
+        environment:
+            PMA_HOST: db
+            PMA_USER: root_user
+            PMA_PASSWORD: root
+        depends_on:
+            - db
+        ports:
+            - "8080:80"
